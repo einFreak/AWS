@@ -1,5 +1,6 @@
 # autonomous-watering-system
 Project for autonomous plant watering with ESP8266 and Pi B+
+----
 
 Pi Setup:
 ===========

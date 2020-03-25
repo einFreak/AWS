@@ -70,21 +70,23 @@ void reconnect() {
 }
 
 int read_moist() {
+  int moist_max = 1005;
+  int moist_min = 475;
+ 
   moist_val = analogRead(0);
   
-  if (moist_val > moist_max)
-    moist_max = moist_val;
-  if (moist_val < moist_min)
-    moist_min = moist_val;
-
+  
   int moist_100 = moist_max - moist_min;
   int moist_akt = moist_val - moist_min;
 
-  send_message("plant1/debug/m_max", moist_max );
-  send_message("plant1/debug/m_min", moist_min );
+
   
   int percentage = 100 - ( (moist_akt * 100) / moist_100 );
+  if(percantage <= 100 && percentage >= 0){
   return percentage;
+  } else {
+   send_message("plant1/error: moistore beyond resonable", persentage);
+  }
 }
 
 //Läuft konstant am Board, client.loop regelmäßg aufrufen um eingehende Nachrichten zu verarbeiten. Gibt false bei Verbindungsabbruch aus.

@@ -1,0 +1,43 @@
+mosquitto_pub -h 192.168.178.190 -t plant1/signal/ -m 53
+mosquitto_pub -h 192.168.178.190 -t plant1/temp/ -m 23
+mosquitto_pub -h 192.168.178.190 -t plant1/hum/ -m 50
+mosquitto_pub -h 192.168.178.190 -t plant2/signal/ -m 67
+mosquitto_pub -h 192.168.178.190 -t plant2/temp/ -m 21
+mosquitto_pub -h 192.168.178.190 -t plant2/hum/ -m 40
+ping 127.0.0.1 -w 5
+mosquitto_pub -h 192.168.178.190 -t plant1/signal/ -m 46
+mosquitto_pub -h 192.168.178.190 -t plant1/temp/ -m 24
+mosquitto_pub -h 192.168.178.190 -t plant1/hum/ -m 55
+mosquitto_pub -h 192.168.178.190 -t plant2/signal/ -m 63
+mosquitto_pub -h 192.168.178.190 -t plant2/temp/ -m 19
+mosquitto_pub -h 192.168.178.190 -t plant2/hum/ -m 44
+ping 127.0.0.1 -w 5
+mosquitto_pub -h 192.168.178.190 -t plant1/signal/ -m 53
+mosquitto_pub -h 192.168.178.190 -t plant1/temp/ -m 23
+mosquitto_pub -h 192.168.178.190 -t plant1/hum/ -m 50
+mosquitto_pub -h 192.168.178.190 -t plant2/signal/ -m 67
+mosquitto_pub -h 192.168.178.190 -t plant2/temp/ -m 21
+mosquitto_pub -h 192.168.178.190 -t plant2/hum/ -m 40
+ping 127.0.0.1 -w 5
+mosquitto_pub -h 192.168.178.190 -t plant1/signal/ -m 46
+mosquitto_pub -h 192.168.178.190 -t plant1/temp/ -m 24
+mosquitto_pub -h 192.168.178.190 -t plant1/hum/ -m 55
+mosquitto_pub -h 192.168.178.190 -t plant2/signal/ -m 63
+mosquitto_pub -h 192.168.178.190 -t plant2/temp/ -m 19
+mosquitto_pub -h 192.168.178.190 -t plant2/hum/ -m 44
+ping 127.0.0.1 -w 5
+mosquitto_pub -h 192.168.178.190 -t plant1/signal/ -m 53
+mosquitto_pub -h 192.168.178.190 -t plant1/temp/ -m 23
+mosquitto_pub -h 192.168.178.190 -t plant1/hum/ -m 50
+mosquitto_pub -h 192.168.178.190 -t plant2/signal/ -m 67
+mosquitto_pub -h 192.168.178.190 -t plant2/temp/ -m 21
+mosquitto_pub -h 192.168.178.190 -t plant2/hum/ -m 40
+ping 127.0.0.1 -w 5
+mosquitto_pub -h 192.168.178.190 -t plant1/signal/ -m 46
+mosquitto_pub -h 192.168.178.190 -t plant1/temp/ -m 24
+mosquitto_pub -h 192.168.178.190 -t plant1/hum/ -m 55
+mosquitto_pub -h 192.168.178.190 -t plant2/signal/ -m 63
+mosquitto_pub -h 192.168.178.190 -t plant2/temp/ -m 19
+mosquitto_pub -h 192.168.178.190 -t plant2/hum/ -m 44
+ping 127.0.0.1 -w 5
+exit

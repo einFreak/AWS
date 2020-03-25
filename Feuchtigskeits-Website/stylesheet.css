@@ -1,0 +1,37 @@
+body {
+  background-color: #333333;
+  font-family: Good Times;
+  color: #cccccc;
+  text-align: center;
+}
+
+.Status_Left {
+	font-family: Arial,Helvetica,sans-serif;
+	bottom: 3%;
+	left: 5%;
+	text-align: left;
+	position: fixed;
+	width: 60%;
+}
+.Status_Right {
+	  position: fixed;
+	  right: 5%;
+	  text-align: left;
+	  font-family: Arial,Helvetica,sans-serif;
+	  bottom: 3%;
+	  width: 30%;
+}
+.footer {
+	  font-size: smaller;
+	  color: #666666;
+	  bottom: 0%;
+	  width: 100%;
+	  position: fixed;
+	  text-align: center;
+}
+
+.flip {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+

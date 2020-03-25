@@ -1,0 +1,1 @@
+plink.exe -ssh -pw pi dietpi@192.168.178.190 -m mqtt_test.txt

@@ -1,0 +1,82 @@
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="description" content="automatic plant watering controllcenter">
+	<meta name="keywords" content="mqtt, watering, javascript">
+	<meta name="author" content="Felix Wild">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<title>Feuchtigkeitssensor</title>
+
+	
+	  
+	<!-- jQuery needed for Sparkline-->
+	  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<!-- Sparkline für Diagramme-->
+	  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.1.2/jquery.sparkline.min.js"></script>
+	<!-- jgPlot für Diagramme -->
+	  <link class="include" rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.9/jquery.jqplot.min.css">
+	  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.9/jquery.jqplot.js"></script>
+	  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.9/jquery.jqplot.min.js"></script>
+	  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.9/plugins/jqplot.canvasTextRenderer.min.js"></script>
+	  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.9/plugins/jqplot.canvasAxisLabelRenderer.min.js"></script>
+	  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.9/plugins/jqplot.dateAxisRenderer.js"></script>
+	<!-- MQTT Websocket -->
+	  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.2/mqttws31.js"></script>
+
+
+	<!-- own MQTT Messaging -->
+	<script type="text/javascript" src="mqtt_custom.js"></script>
+	<!-- own Stylesheet -->
+	<link class="include" rel="stylesheet" type="text/css" href="stylesheet.css">
+
+</head>
+
+<body>
+
+	<img class="flip" src="pngwave.png" alt="Flowers" style="width: 12%; height: auto;" align="left"><img style="width: 12%; height: auto;" alt="Flowers" src="pngwave.png" align="right">
+	<h1>Wet these Flowers</h1>
+
+	<table style="text-align: left; width: 60%; height: 131px; margin-left: auto; margin-right: auto;" border="1" cellpadding="10" cellspacing="2">
+		<tbody>
+			<tr>
+				<td colspan="2" rowspan="1" style="vertical-align: top; text-align: center;">Pflanze 1     </td>
+				<td colspan="2" rowspan="1" style="vertical-align: top; text-align: center;">Pflanze 2      </td>
+			</tr>
+			<tr>
+				<td style="vertical-align: top;">Signal							</td>
+				<td style="vertical-align: top;"><span id="P1_Sig">???</span>	</td>
+				<td style="vertical-align: top; text-align: left;">Signal		</td>
+				<td style="vertical-align: top;"><span id="P2_Sig">???</span>	</td>
+			</tr>
+			<tr>
+				<td style="vertical-align: top;">Temp							</td>
+				<td style="vertical-align: top;"><span id="P1_Temp">???</span>	</td>
+				<td style="vertical-align: top;">Temp							</td>
+				<td style="vertical-align: top;"><span id="P2_Temp">???</span>	</td>
+			</tr>
+			<tr>
+				<td style="vertical-align: top;">Feuchtigkeit					</td>
+				<td style="vertical-align: top;"><span id="P1_Hum">???</span>	</td>
+				<td style="vertical-align: top;">Feuchtigkeit					</td>
+				<td style="vertical-align: top;"><span id="P2_Hum">???</span>	</td>
+			</tr>
+			<tr>
+				<td colspan="2" rowspan="1" style="vertical-align: top;">		
+					<span id="P1_Diag"></span>
+				</td>
+				<td colspan="2" rowspan="1" style="vertical-align: top;">		
+					<span id="P2_Diag"></span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div class="Status_Left"> <b>Latest MQTT message: </b> <small id="message">no message recieved</small> </div>
+
+	<div class="Status_Right"> <b>Status: </b> <small id="status">not connected</small> </div>
+
+	<div class="footer">© Felix Wild 2020</div>
+
+</body></html>

@@ -113,6 +113,7 @@ function onMessageArrived(message) {
 $(document).ready(
 	function() {
 		console.log( "ready for js!" );
+		drawDiag();
 		MQTTconnect();
 	}
 );

@@ -80,6 +80,7 @@ int read_moist() {
   int moist_100 = moist_max - moist_min;
   int moist_akt = moist_val - moist_min;
 
+  send_message("plant1/debug/m_val", moist_val );
   send_message("plant1/debug/m_max", moist_max );
   send_message("plant1/debug/m_min", moist_min );
   

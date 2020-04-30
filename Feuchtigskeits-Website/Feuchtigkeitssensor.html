@@ -7,31 +7,36 @@
 	<meta name="author" content="Felix Wild">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
+	<link rel = "icon" href = "favicon.ico" type = "image/x-icon" />
+	<link rel = "shortcut icon" href = "favicon.ico" type = "image/x-icon" />
+	
 	<title>Feuchtigkeitssensor</title>
 
 	
-	  
-	<!-- jQuery needed for Sparkline-->
-	  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<!-- Sparkline für Diagramme-->
-	  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.1.2/jquery.sparkline.min.js"></script>
 	<!-- jgPlot für Diagramme -->
-	  <link class="include" rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.9/jquery.jqplot.min.css">
-	  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.9/jquery.jqplot.js"></script>
-	  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.9/jquery.jqplot.min.js"></script>
-	  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.9/plugins/jqplot.canvasTextRenderer.min.js"></script>
-	  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.9/plugins/jqplot.canvasAxisLabelRenderer.min.js"></script>
-	  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.9/plugins/jqplot.dateAxisRenderer.js"></script>
+		<script language="javascript" type="text/javascript" src="jqplot/jquery.min.js"></script>
+		<script language="javascript" type="text/javascript" src="jqplot/jquery.jqplot.min.js"></script>
+		<!-- For rotation axis -->
+			<script type="text/javascript" src="jqplot/jquery.jqplot.js"></script>
+			<script type="text/javascript" src="jqplot/plugins/jqplot.logAxisRenderer.js"></script>
+			<script type="text/javascript" src="jqplot/plugins/jqplot.canvasTextRenderer.js"></script>
+			<script type="text/javascript" src="jqplot/plugins/jqplot.canvasAxisLabelRenderer.js"></script>
+			<script type="text/javascript" src="jqplot/plugins/jqplot.canvasAxisTickRenderer.js"></script>
+			<script type="text/javascript" src="jqplot/plugins/jqplot.dateAxisRenderer.js"></script>
+			<script type="text/javascript" src="jqplot/plugins/jqplot.categoryAxisRenderer.js"></script>
+			<script type="text/javascript" src="jqplot/plugins/jqplot.barRenderer.js"></script>
+		
+		<link rel="stylesheet" type="text/css" href="jqplot/jquery.jqplot.css" />
 	<!-- MQTT Websocket -->
-	  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.2/mqttws31.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.2/mqttws31.js"></script>
 
 
 	<!-- Diagramme js -->
-	<script type="text/javascript" src="diagramm.js"></script>
+		<script type="text/javascript" src="diagramms.js"></script>
 	<!-- own MQTT Messaging -->
-	<script type="text/javascript" src="mqtt_custom.js"></script>
+		<script type="text/javascript" src="mqtt_custom.js"></script>
 	<!-- own Stylesheet -->
-	<link class="include" rel="stylesheet" type="text/css" href="stylesheet.css">
+		<link class="include" rel="stylesheet" type="text/css" href="stylesheet.css">
 
 </head>
 
@@ -41,7 +46,7 @@
 	<img style="width: 12%; height: auto;" alt="Flowers" src="images/flower.png" align="right">
 	<h1>Wet these Flowers</h1>
 
-	<table style="text-align: left; width: 60%; height: 131px; margin-left: auto; margin-right: auto;" border="1" cellpadding="10" cellspacing="2">
+	<table border="1" cellpadding="10" cellspacing="2">
 		<tbody>
 			<tr>
 				<td colspan="2" rowspan="1" style="vertical-align: top; text-align: center;">Pflanze 1     </td>
@@ -67,7 +72,7 @@
 			</tr>
 			<tr>
 				<td colspan="2" rowspan="1" style="vertical-align: top;">		
-					<span id="P1_Diag"></span>
+					<!-- <span id="P1_Diag"></span> -->
 				</td>
 				<td colspan="2" rowspan="1" style="vertical-align: top;">		
 					<span id="P2_Diag"></span>
@@ -75,6 +80,15 @@
 			</tr>
 		</tbody>
 	</table>
+	
+	<br><br><br>
+	<h1>P1 Diagramme</h1>
+	<div style="width: 100%; height: auto;" align="left" id="P1_Diag"></div>
+	<br>
+	<h1>P2 Diagramme</h1>
+	<div style="width: 100%; height: auto;" align="left" id="P2_Diag"></div>
+	<br><br><br><br>
+	
 
 	<div class="Status_Left"> <b>Latest MQTT message: </b> <small id="message">no message recieved</small> </div>
 

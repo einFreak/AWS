@@ -1,6 +1,6 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
-#include "G:\AWS-Project\ESP8266_HumSens\NetworkInfo.h"
+#include "NetworkInfo.h"
 
 //Ausgelagert in Headerdatei
 //const char*   SSID            = "NETZWERKNAME";
@@ -20,7 +20,6 @@ int moist_min = moist_val;
  
 //Eisntellungen bei Start des Boards
 void setup() {
-    Serial.begin(115200);
     setup_wifi();
     client.setServer(MQTT_BROKER_IP, MQTT_PORT);  //Broker + Port setzen
     client.setCallback(callback);     //Fkt callback bei Nachrichtenempfang
@@ -32,41 +31,27 @@ void setup() {
  
 void setup_wifi() {
     delay(10);
-    Serial.println();
-    Serial.print("Connecting to ");
-    Serial.println(SSID);
  
     WiFi.begin(SSID, PASSWORD);
  
     while (WiFi.status() != WL_CONNECTED) {
         delay(500);
-        Serial.print(".");
     }
- 
-    Serial.println("");
-    Serial.println("WiFi connected");
-    Serial.println("IP address: ");
-    Serial.println(WiFi.localIP());
 }
  
 void reconnect() {
     while (!client.connected()) {
-        Serial.println("Verbindung mit MQTT wiederherstellen...");
-        
+
     // Create a random client ID
     String clientId = "ESP8266_HumSens-";
     clientId += String(random(0xffff), HEX);
     
     //Verbindungsversuch - keine Nachricht bei Erfolg
     if (!client.connect(clientId.c_str())) {
-            Serial.print("fehlgeschlagen, rc=");
-            Serial.print(client.state());
-            Serial.println(" neuer Versuch in 5 Sekunden");
             delay(5000);
         }
     }
     client.subscribe(MQTT_SUB_TOPIC);
-    Serial.println("MQTT Connected...");
 }
 
 int read_moist() {
@@ -94,39 +79,25 @@ void loop() {
         reconnect();
     }
     client.loop();
-    
-  
-  
-  send_message("plant1/hum", read_moist() );
-  delay(5000);
+
+    //send_message("plant1/hum", analogRead(0) );
+    send_message("plant1/hum", read_moist() );
+    delay(5000);
 }
 
 //Aufruf bei Nachricht in Topic
 void callback(char* topic, byte* payload, unsigned int length) {
-    
-  Serial.print("Neue Nachricht [");
-    Serial.print(topic);
-    Serial.print("] ");
-  
+
   //erstelle msg-Array zur Verarbeitung
     char msg[length+1];
     for (int i = 0; i < length; i++) {
-        Serial.print((char)payload[i]);
         msg[i] = (char)payload[i];
     }
-    Serial.println();
+    //Serial.println();
   
-  //End of line für fertigen String
+    //End of line für fertigen String
     msg[length] = '\0';
-    Serial.println(msg);
-  
-  //Hier Nachricht verarbeiten
-    // if(strcmp(msg,"on")==0){
-        // digitalWrite(13, HIGH);
-    // }
-    // else if(strcmp(msg,"off")==0){
-        // digitalWrite(13, LOW);
-    // }
+
 }
 
 void send_message(const char* topic, const char* payload) {

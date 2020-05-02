@@ -1,34 +1,54 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 #include "NetworkInfo.h"
+#include "mqtt.h"
+#include "MoistureShield.h"
 
-//Ausgelagert in Headerdatei
-//const char*   SSID            = "NETZWERKNAME";
-//const char*   PASSWORD        = "NETZWERKSCHLÜSSEL";
-const char*     MQTT_BROKER_IP  = "192.168.178.190";
-const char*     MQTT_SUB_TOPIC  = "/home/data"; //zB "/home/data" - momentan unnötig
-int             MQTT_PORT       = 1883;
+/*
+ * moved to NetworkInfo.h
+ * const char*   SSID            = "NETZWERKNAME";
+ * const char*   PASSWORD        = "NETZWERKSCHLÜSSEL"; 
+ */
+int moist_val[4] = {0, 0 ,0 ,0};
+void setup();
+void loop();
+void setup_wifi();
+void reconnect();
  
-WiFiClient espClient;
-PubSubClient client(espClient);
-long lastMsg = 0;
-char msg[50];
-int value = 0;
-int moist_val = 0;
-int moist_max = moist_val;
-int moist_min = moist_val;
- 
-//Eisntellungen bei Start des Boards
+//Board starting setup
 void setup() {
+    ShieldSetup();
     setup_wifi();
-    client.setServer(MQTT_BROKER_IP, MQTT_PORT);  //Broker + Port setzen
-    client.setCallback(callback);     //Fkt callback bei Nachrichtenempfang
-
-    moist_val = analogRead(0);
-    moist_max = moist_val;
-    moist_min = moist_val;
+    mqtt_Setup();
 }
- 
+
+/*  
+ *  loop running constantly on board, 
+ *  call client.loop regulary to check for incomming messages
+ */
+void loop() {
+
+    //Check WiFi
+    if (WiFi.status() != WL_CONNECTED) {
+        setup_wifi();
+    }
+    
+    //check mqtt status
+    if (!client.connected()) {
+        reconnect();
+    }
+    client.loop();
+
+    //reading values
+    for (int i = 1; i < 5; i++) {
+      send_message("debug/reading", i);
+      if(!read_moist(moist_val, i))
+        delay(5000);
+    }
+    
+}
+
+//Connecting WIFI
 void setup_wifi() {
     delay(10);
  
@@ -38,7 +58,8 @@ void setup_wifi() {
         delay(500);
     }
 }
- 
+
+//Reconnet to mqtt broker
 void reconnect() {
     while (!client.connected()) {
 
@@ -52,61 +73,4 @@ void reconnect() {
         }
     }
     client.subscribe(MQTT_SUB_TOPIC);
-}
-
-int read_moist() {
-  moist_val = analogRead(0);
-  
-  if (moist_val > moist_max)
-    moist_max = moist_val;
-  if (moist_val < moist_min)
-    moist_min = moist_val;
-
-  int moist_100 = moist_max - moist_min;
-  int moist_akt = moist_val - moist_min;
-
-  send_message("plant1/debug/m_val", moist_val );
-  send_message("plant1/debug/m_max", moist_max );
-  send_message("plant1/debug/m_min", moist_min );
-  
-  int percentage = 100 - ( (moist_akt * 100) / moist_100 );
-  return percentage;
-}
-
-//Läuft konstant am Board, client.loop regelmäßg aufrufen um eingehende Nachrichten zu verarbeiten. Gibt false bei Verbindungsabbruch aus.
-void loop() {
-    if (!client.connected()) {
-        reconnect();
-    }
-    client.loop();
-
-    //send_message("plant1/hum", analogRead(0) );
-    send_message("plant1/hum", read_moist() );
-    delay(5000);
-}
-
-//Aufruf bei Nachricht in Topic
-void callback(char* topic, byte* payload, unsigned int length) {
-
-  //erstelle msg-Array zur Verarbeitung
-    char msg[length+1];
-    for (int i = 0; i < length; i++) {
-        msg[i] = (char)payload[i];
-    }
-    //Serial.println();
-  
-    //End of line für fertigen String
-    msg[length] = '\0';
-
-}
-
-void send_message(const char* topic, const char* payload) {
-  client.publish(topic, payload);
-}
-
-void send_message(const char* topic, int payload) {
-  char buffer[33];
-  itoa(payload, buffer, 10);
-  const char* p = buffer;
-  client.publish(topic, p);
 }

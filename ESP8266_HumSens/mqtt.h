@@ -1,10 +1,15 @@
 #ifndef own_mqtt_h
 #define own_mqtt_h
 
+
 void mqtt_Setup();
 void send_message(const char* topic, const char* payload);
 void send_message(const char* topic, int payload);
 void callback(char* topic, byte* payload, unsigned int length);
+
+//Because we can't include HumSens and MoistureShield
+extern int moist_val[4];
+extern int read_moist(int *val, int sensor);
 
 WiFiClient espClient;
 const char*     MQTT_BROKER_IP  = "192.168.178.190";
@@ -35,7 +40,7 @@ void send_message(const char* topic, int payload) {
 //Aufruf bei Nachricht in Topic
 void callback(char* topic, byte* payload, unsigned int length) {
 
-  /* //erstelle msg-Array zur Verarbeitung
+   //erstelle msg-Array zur Verarbeitung
     char msg[length+1];
     for (int i = 0; i < length; i++) {
         msg[i] = (char)payload[i];
@@ -43,7 +48,9 @@ void callback(char* topic, byte* payload, unsigned int length) {
     //Serial.println();
 
     //End of line für fertigen String
-    msg[length] = '\0'; */
+    msg[length] = '\0'; 
+
+    read_moist(moist_val, msg[0]);
 
 }
 

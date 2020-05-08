@@ -26,13 +26,21 @@ void ShieldSetup();
 
 void ShieldSetup() {
   pinMode(D1, OUTPUT);
+  digitalWrite(D1, LOW);
   pinMode(D2, OUTPUT);
+  digitalWrite(D2, LOW);
   pinMode(D3, OUTPUT);
+  digitalWrite(D3, LOW);
   pinMode(D4, OUTPUT);
+  digitalWrite(D4, LOW);
   pinMode(D5, OUTPUT);
+  digitalWrite(D5, LOW);
   pinMode(mA0, OUTPUT);
+  digitalWrite(mA0, LOW);
   pinMode(mA1, OUTPUT);
+  digitalWrite(mA1, LOW);
   pinMode(EN, OUTPUT);
+  digitalWrite(EN, LOW);
 }
 
 int changeInput(int input) {

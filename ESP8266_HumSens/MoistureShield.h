@@ -4,12 +4,13 @@
    D2 -> Verbraucher 2      D7 -> A1 Multiplexer  |   0 | 1   ->  A1
    D3 -> Verbraucher 3      D8 -> En Multiplexer  |   1 | 0   ->  A2 
    D4 -> Verbraucher 4                            |   1 | 1   ->  A3
+
+   D2: LED, D3/4 no pull low, D8 no pull high
 */
 
 #ifndef MoistureShield_h
 #define MoistureShield_h
 
-#include "mqtt.h"
 #define D0  16
 #define D1  5
 #define D2  4
@@ -77,36 +78,10 @@ int changeInput(int input) {
 int read_moist(int *val, int sensor) {
 
   if (!changeInput(sensor)) {
-
     val[sensor - 1] = analogRead(0);
-    int moist_rel_pct = val[sensor - 1] - 460;
-    int percentage = 100 - ( (moist_rel_pct * 100) / 540 ); //540 = moist_100_pct = 1000 - 460
-
-    switch (sensor) {
-      case 1:
-        send_message("plant1/debug/m_val", val[sensor - 1] );
-        send_message("plant1/hum", percentage);
-        break;
-      case 2:
-        send_message("plant2/debug/m_val", val[sensor - 1] );
-        send_message("plant2/hum", percentage);
-        break;
-      case 3:
-        send_message("plant3/debug/m_val", val[sensor - 1] );
-        send_message("plant3/hum", percentage);
-        break;
-      case 4:
-        send_message("plant4/debug/m_val", val[sensor - 1] );
-        send_message("plant4/hum", percentage);
-        break;
-      default:
-        send_message("debug", "No Sensor for this Input:");
-        send_message("debug", sensor);
-        return 666;
-        break;
-    }
     return 0;
   }
+  return 666;
 }
 
 #endif MoistureShield_h

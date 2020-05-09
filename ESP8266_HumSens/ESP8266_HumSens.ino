@@ -3,6 +3,7 @@
 #include "NetworkInfo.h"
 #include "mqtt.h"
 #include "MoistureShield.h"
+#include "AutoWatering.h"
 
 /*
  * moved to NetworkInfo.h

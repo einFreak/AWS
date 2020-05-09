@@ -9,7 +9,7 @@ void callback(char* topic, byte* payload, unsigned int length);
 
 //Because we can't include HumSens and MoistureShield
 extern int moist_val[4];
-extern int read_moist(int *val, int sensor);
+extern int read_moist(int *val, char sensor);
 
 WiFiClient espClient;
 const char*     MQTT_BROKER_IP  = "192.168.178.190";

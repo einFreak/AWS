@@ -67,15 +67,17 @@ function onMessageArrived(message) {
 	$('#message').html(topic + ', ' + payload);
 	
 	var message = topic.split('/');
-	var plant = message[0];
-		console.log("plant: " + message[0]);
-	var sensor = message[1];
-		console.log("sensor: " + message[1]);
+	var plantNr = message[1];
+		console.log("plant: " + message[1]);
+	var sensor = message[2];
+		console.log("sensor: " + message[2]);
+		
+		console.log("Payload: " + payload);
 
 	var timestamp = Date.now();
 	
-	switch (plant) {
-		case 'plant1': 
+	switch (plantNr) {
+		case '1': 
 		
 			switch (sensor) {
 				case 'signal':
@@ -88,9 +90,9 @@ function onMessageArrived(message) {
 					$('#P1_Hum').html(payload + '<span style="font-family: Arial,Helvetica,sans-serif;"> %</span>');
 					break;
 			}
-		break;	
+			break;	
 			
-		case 'plant2': 
+		case '2': 
 		
 			switch (sensor) {
 				case 'signal':
@@ -103,7 +105,7 @@ function onMessageArrived(message) {
 					$('#P2_Hum').html(payload + '<span style="font-family: Arial,Helvetica,sans-serif;"> %</span>');
 					break;
 			}
-		break;	
+			break;	
 		
 		default: console.log('Error: Data do not match the MQTT topic.'); 
 		break;	

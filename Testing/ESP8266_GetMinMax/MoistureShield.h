@@ -2,13 +2,12 @@
 #define MoistureShield_h
 
 #include "ESP8266_DRIVER.h"
+
 int read_moist(int *val, char sensor);
 int changeInput(int input);
 void ShieldSetup();
 
 void ShieldSetup() {
-  pinMode(D0, OUTPUT);
-  digitalWrite(D0, LOW);
   pinMode(D1, OUTPUT);
   digitalWrite(D1, LOW);
   pinMode(D2, OUTPUT);

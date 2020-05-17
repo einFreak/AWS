@@ -40,16 +40,11 @@ void loop() {
     }
     client.loop();
 
-    send_moist(moist_val, 1);
-    Auto_Watering(moist_val, 1, 0);
-    delay(10000);
-
     //reading values
-    /*for (int i = 1; i < 5; i++) {
+    for (int i = 1; i < 4; i++) {
       send_message("debug/reading", i);
-      if(!read_moist(moist_val, i))
-        delay(5000);
-    }*/
+      send_moist(moist_val, i);
+    }
     
 }
 

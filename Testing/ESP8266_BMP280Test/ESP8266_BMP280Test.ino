@@ -4,6 +4,7 @@
 #include "mqtt.h"
 #include "MoistureShield.h"
 #include "AutoWatering.h"
+#include "BMP280.h"
 
 /*
  * moved to NetworkInfo.h
@@ -11,8 +12,6 @@
  * const char*   PASSWORD        = "NETZWERKSCHLÜSSEL"; 
  */
 int moist_val[4] = {0, 0 ,0 ,0};
-unsigned int moist_min[4] = {2000, 2000 ,2000 ,2000};
-unsigned int moist_max[4] = {0, 0 ,0 ,0};
 void setup();
 void loop();
 void setup_wifi();
@@ -23,6 +22,7 @@ void setup() {
     ShieldSetup();
     setup_wifi();
     mqtt_Setup();
+	  setup_bmp();
 }
 
 /*  
@@ -41,21 +41,21 @@ void loop() {
         reconnect();
     }
     client.loop();
+	
+	get_bmp_temp();
+	delay(1000);
+	
+	/*
+    send_moist(moist_val, 1);
+    Auto_Watering(moist_val, 1, 0);
+    delay(10000); */
 
-    //reading values 1-3
-    for (int i = 1; i < 4; i++) {
+    //reading values
+    /*for (int i = 1; i < 5; i++) {
       send_message("debug/reading", i);
-      send_moist(moist_val, i);
-
-      if (moist_val[i] < moist_min[i])
-        moist_min[i] = moist_val[i];
-      if (moist_val[i] > moist_max[i])
-        moist_max[i] = moist_val[i];
-
-      send_message("plant1/debug/m_min", moist_min[i] );
-      send_message("plant1/debug/m_max", moist_max[i] );
-      
-    }
+      if(!read_moist(moist_val, i))
+        delay(5000);
+    }*/
     
 }
 

@@ -27,6 +27,20 @@ apt-get install mosquitto mosquitto-clients -y
     sudo nano /etc/mosquitto/mosquitto.conf
 
 
+6. Database SQLite
+Install Node.js
+```
+curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+sudo apt-get install -y nodejs
+```
+Install SQLite3 (preinstalled with pihole)
+```
+sudo apt-get install -y sqlite3
+sudo apt-get install -y nodejs
+```
+
+
+
 ---
 
 
@@ -44,3 +58,10 @@ lsof -i:9001
 ## Nachricht versenden
     mosquitto_pub -d -t /Plant1/hum -m 26
 
+
+## Add website to existing pihole lighttpd setup
+Add files to pihole admin folder:
+```
+/var/www/html/admin
+```
+Aufruf über: pi.hole/admin/site.hmtl

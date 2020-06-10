@@ -17,6 +17,24 @@ table {
 	margin-right: auto;
 }
 
+button {
+  transition-duration: 0.4s;
+  background-color: #078f00; /* Green */
+  border-radius: 4px;
+  padding: 16px;
+  
+  border: none;
+  text-align: center;
+  margin: 10px 2px;
+  color: #cccccc;
+  font-family: Good Times;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+button:hover {
+  background-color: #067800; /* Green */
+}
+
 .Status_Left {
 	font-family: Arial,Helvetica,sans-serif;
 	bottom: 3%;
@@ -45,5 +63,10 @@ table {
 .flip {
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
+}
+
+.jqplot-title {
+	font-family: Good Times;
+    color: #cccccc;
 }
 

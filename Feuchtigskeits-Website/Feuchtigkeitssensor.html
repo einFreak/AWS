@@ -25,6 +25,8 @@
 			<script type="text/javascript" src="jqplot/plugins/jqplot.dateAxisRenderer.js"></script>
 			<script type="text/javascript" src="jqplot/plugins/jqplot.categoryAxisRenderer.js"></script>
 			<script type="text/javascript" src="jqplot/plugins/jqplot.barRenderer.js"></script>
+			<script type="text/javascript" src="jqplot/plugins/jqplot.highlighter.js"></script>
+			<script type="text/javascript" src="jqplot/plugins/jqplot.cursor.js"></script>
 		
 		<link rel="stylesheet" type="text/css" href="jqplot/jquery.jqplot.css" />
 	<!-- MQTT Websocket -->
@@ -53,42 +55,57 @@
 		<tbody>
 			<tr>
 				<td colspan="2" rowspan="1" style="vertical-align: top; text-align: center;">Pflanze 1     </td>
-				<td colspan="2" rowspan="1" style="vertical-align: top; text-align: center;">Pflanze 2      </td>
+				<!-- <td colspan="2" rowspan="1" style="vertical-align: top; text-align: center;">Pflanze 2      </td> -->
 			</tr>
 			<tr>
 				<td style="vertical-align: top;">Signal							</td>
 				<td style="vertical-align: top;"><span id="P1_Sig">???</span>	</td>
-				<td style="vertical-align: top; text-align: left;">Signal		</td>
-				<td style="vertical-align: top;"><span id="P2_Sig">???</span>	</td>
+				<!-- <td style="vertical-align: top; text-align: left;">Signal		</td>
+				<td style="vertical-align: top;"><span id="P2_Sig">???</span>	</td> -->
 			</tr>
 			<tr>
 				<td style="vertical-align: top;">Temp							</td>
 				<td style="vertical-align: top;"><span id="P1_Temp">???</span>	</td>
-				<td style="vertical-align: top;">Temp							</td>
-				<td style="vertical-align: top;"><span id="P2_Temp">???</span>	</td>
+				<!-- <td style="vertical-align: top;">Temp							</td>
+				<td style="vertical-align: top;"><span id="P2_Temp">???</span>	</td> -->
 			</tr>
 			<tr>
 				<td style="vertical-align: top;">Feuchtigkeit					</td>
 				<td style="vertical-align: top;"><span id="P1_Hum">???</span>	</td>
-				<td style="vertical-align: top;">Feuchtigkeit					</td>
-				<td style="vertical-align: top;"><span id="P2_Hum">???</span>	</td>
-			</tr>
-			<tr>
-				<td colspan="2" rowspan="1" style="vertical-align: top;">		
-					<!-- <span id="P1_Diag"></span> -->
-				</td>
-				<td colspan="2" rowspan="1" style="vertical-align: top;">		
-					<span id="P2_Diag"></span>
-				</td>
+				<!-- <td style="vertical-align: top;">Feuchtigkeit					</td>
+				<td style="vertical-align: top;"><span id="P2_Hum">???</span>	</td> -->
 			</tr>
 		</tbody>
 	</table>
 	
-	<br><br><br>
-	<h1>P1 Diagramme</h1>
+	<form id="water">
+		<label>Zeit:
+			<select name="watertime" id="watertime">
+				<option value=5>5s</option>
+				<option value=10>10s</option>
+				<option value=30>30s</option>
+				<option value=60>60s</option>
+			</select>
+		</label>
+		<br>
+		<button type="button" id="water_btn">Starte Pumpe</button>
+	</form>
+	<script>
+		
+		document.querySelector('#water_btn').addEventListener('click', startWater);
+		
+		function startWater() {
+			console.log(document.getElementById("watertime").value);
+			SendMessage ("water_ctrl", document.getElementById("watertime").value);
+			console.log( "sent water command - time: " + document.getElementById("watertime").value ); 
+			
+		}
+	</script>
+	
+	
+	<br><br>
 	<div style="width: 100%; height: auto;" align="left" id="P1_Diag"></div>
-	<br>
-	<h1>P2 Diagramme</h1>
+	<br><br><br>
 	<div style="width: 100%; height: auto;" align="left" id="P2_Diag"></div>
 	<br><br><br><br>
 	

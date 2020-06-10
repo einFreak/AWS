@@ -9,9 +9,12 @@ var cleansession = true;
 var mqtt;
 var reconnectTimeout = 2000;
 
-//needs to be here that it doesn't get overwritten by new messages
-var livingTemp = new Array();
-var basementTemp = new Array();
+//for drawing diagrams
+var diag_counter = 0;
+var diag_counter2 = 0;
+
+var line1 = [[new Date(), 46], [new Date(), 40]];
+var line2 = [[new Date(), 20]];
 
 function MQTTconnect() {
 	if (typeof path == "undefined") {
@@ -67,48 +70,60 @@ function onMessageArrived(message) {
 	$('#message').html(topic + ', ' + payload);
 	
 	var message = topic.split('/');
-	var plantNr = message[1];
-		console.log("plant: " + message[1]);
-	var sensor = message[2];
-		console.log("sensor: " + message[2]);
-		
-		console.log("Payload: " + payload);
-
-	var timestamp = Date.now();
 	
-	switch (plantNr) {
-		case '1': 
+	if (message[0] == "plants") {
+		var plantNr = message[1];
+		var sensor = message[2];
+		var timestamp = Date.now();
 		
-			switch (sensor) {
-				case 'signal':
-					$('#P1_Sig').text(payload + ' dBm');
-					break;
-				case 'temp':
-					$('#P1_Temp').text(payload + ' °C');
-					break;
-				case 'hum':
-					$('#P1_Hum').html(payload + '<span style="font-family: Arial,Helvetica,sans-serif;"> %</span>');
-					break;
-			}
-			break;	
+		switch (plantNr) {
+			case '1': 
 			
-		case '2': 
-		
-			switch (sensor) {
-				case 'signal':
-					$('#P2_Sig').text(payload + ' dBm');
-					break;
-				case 'temp':
-					$('#P2_Temp').text(payload + ' °C');
-					break;
-				case 'hum':
-					$('#P2_Hum').html(payload + '<span style="font-family: Arial,Helvetica,sans-serif;"> %</span>');
-					break;
-			}
+				switch (sensor) {
+					case 'signal':
+						$('#P1_Sig').text(payload + ' dBm');
+						break;
+					case 'temp':
+						$('#P1_Temp').text(payload + ' °C');
+						
+						line2[diag_counter2] = [new Date(), payload];
+						diag_counter2++;
+						/* if (diag_counter2 > 10)
+							diag_counter2 = 0; */
+						drawDiag2(line2);
+						
+						break;
+					case 'hum':
+						$('#P1_Hum').html(payload + '<span style="font-family: Arial,Helvetica,sans-serif;"> %</span>');
+						
+						line1[diag_counter] = [new Date(), payload];
+						diag_counter++;
+						/*if (diag_counter > 10)
+							diag_counter = 0;*/
+						drawDiag1(line1);
+						
+						break;
+				}
+				break;	
+				
+			case '2': 
+			
+				switch (sensor) {
+					case 'signal':
+						$('#P2_Sig').text(payload + ' dBm');
+						break;
+					case 'temp':
+						$('#P2_Temp').text(payload + ' °C');
+						break;
+					case 'hum':
+						$('#P2_Hum').html(payload + '<span style="font-family: Arial,Helvetica,sans-serif;"> %</span>');
+						break;
+				}
+				break;	
+			
+			default: console.log('Error: Data do not match the MQTT topic.'); 
 			break;	
-		
-		default: console.log('Error: Data do not match the MQTT topic.'); 
-		break;	
+		}
 	}
 };
 

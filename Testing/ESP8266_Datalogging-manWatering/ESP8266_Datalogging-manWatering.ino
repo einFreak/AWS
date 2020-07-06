@@ -31,9 +31,11 @@ void setup() {
  */
 // Generally, you should use "unsigned long" for variables that hold time
 // The value will quickly become too large for an int to store
-unsigned long previousMillis = 0;        // will store last time msg were updated
+unsigned long previousMillis1 = 0;        // will store last time msg were updated
+unsigned long previousMillis2 = 0;
 // constants won't change:
-const long interval = 30000; //30s
+const long interval1 = 60000; //60s
+const long interval2 = 60000*30; //30min
 
  
 void loop() {
@@ -50,14 +52,28 @@ void loop() {
   	client.loop();
 
     unsigned long currentMillis = millis();
-    if (currentMillis - previousMillis >= interval) {
-    	previousMillis = currentMillis;
+    if (currentMillis - previousMillis1 >= interval1) {
+    	previousMillis1 = currentMillis;
     	get_bmp_temp();
     	delay(100);
     	send_moist(moist_val, 1);
       delay(100);
       send_message("plants/1/signal", WiFi.RSSI());
     }
+
+
+    //keep moisture over 25
+    currentMillis = millis();
+    if (currentMillis - previousMillis2 >= interval2) {
+      previousMillis2 = currentMillis;
+      int percentage = 100 - ( ((moist_val[0] - 460) * 100) / 540 ); //540 = moist_100_pct = 1000 - 460
+      
+      if (percentage < 25) {
+        send_message("debug/watering", 30);
+        water_plant(0, 30*1000);
+      }
+    }
+    
 
     client.loop();        
 }

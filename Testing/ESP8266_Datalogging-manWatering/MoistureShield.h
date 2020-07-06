@@ -52,7 +52,7 @@ int changeInput(char input) {
       return 666;
       break;
   }
-  delay(1000);
+  delay(100);
   return 0;
 }
 

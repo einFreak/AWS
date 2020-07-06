@@ -44,9 +44,8 @@ float get_bmp_temp() {
 
     Serial.println();
 
-    send_message("plants/1/debug/temp", temp );
-	send_message("plants/1/debug/pres", pres );
-	send_message("plants/1/debug/alti", alti );
+	  send_message("debug/pres", pres );
+	  send_message("debug/alti", alti );
     send_message("plants/1/temp", temp);
 	
 	return temp;

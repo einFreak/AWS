@@ -17,7 +17,6 @@
 	$arr = $stmt2->get_result()->fetch_all(MYSQLI_NUM);
 	if(!$arr) exit('No rows');
 	var_export($arr);
-	echo "<br><br><br>",$arr,"<br>";
 	$stmt2->close();
 ?>
 

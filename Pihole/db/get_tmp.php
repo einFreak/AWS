@@ -10,5 +10,6 @@
 		$line2 = $stmt2->get_result()->fetch_all(MYSQLI_NUM);
 		if(!$line2) exit('No rows');
 		$db_temp = var_export($line2, true);
+		echo $db_temp;
 		$stmt2->close();
 ?>

@@ -2,9 +2,9 @@
 $(document).ready(
 	function() {
 		console.log( "ready for Diagramms!" );
-		drawDiag1(line1);
+		drawDiag1(hum_data);
 		console.log( "Diag1 drawn" );
-		drawDiag2(line2);
+		drawDiag2(temp_data);
 		console.log( "Diag2 drawn" );
 	}
 );
@@ -13,7 +13,7 @@ var plot1;
 function drawDiag1(line1){
  
     if (plot1) plot1.destroy();
-	plot1 = $.jqplot('P1_Diag', [line1], {
+	plot1 = $.jqplot('P1_Diag', [line1, water_data], {
         title: 'Moisture',
 		grid: {
             backgroundColor: "#444444",
@@ -29,8 +29,15 @@ function drawDiag1(line1){
                 smooth: true
 			}
 		},
-		 series: [
-            {color: 'rgba(25, 200, 255, 0.4)'}
+		 series: [ 
+			{
+				color: 'rgba(25, 200, 255, 0.4)',
+			},
+			{
+				disableStack: true,
+				renderer: $.jqplot.BarRenderer,
+				rendererOptions: {barMargin: 10},
+			}
 		],
 		legend: {show:false},
         axesDefaults: {
@@ -77,9 +84,11 @@ function drawDiag1(line1){
 			tooltipFormatString: '%d %',
 			useAxesFormatters: false
 		},
-		cursor: {
-			show: false
-		}
+		cursor:{
+			show: true,
+            zoom:true,
+            looseZoom: true
+        }
     });
 };
 
@@ -155,8 +164,10 @@ function drawDiag2(line2){
 			tooltipFormatString: '%d °C',
 			useAxesFormatters: false
 		},
-		cursor: {
-			show: false
-		}
+		cursor:{
+			show: true,
+            zoom:true,
+            looseZoom: true
+        }
     });
 };

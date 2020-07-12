@@ -58,6 +58,14 @@ lsof -i:9001
 ## Nachricht versenden
     mosquitto_pub -d -t /Plant1/hum -m 26
 
+## allow ftp access
+change default dir under /etc/proftpd/proftpd.conf
+change permissions
+sudo adduser dietpi www-data
+sudo dietpi:www-data -R /var/www
+sudo chown dietpi:www-data -R /var/www
+
+
 
 ## Add website to existing pihole lighttpd setup
 Add files to pihole admin folder:

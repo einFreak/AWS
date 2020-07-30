@@ -2,12 +2,10 @@
 //filled by $(document).ready at the bottom
 var hum_data 	= [[new Date(), 0]];
 var temp_data 	= [[new Date(), 0]];
-var water_data 	= [[new Date(), 0]];
 
 //for drawing diagrams
 var hum_counter = 0;
 var tmp_counter = 0;
-var wtr_counter = 0;
 
 //get stored data
 function get_localData(stored_element, element_data, element_counter, titel) {
@@ -65,8 +63,6 @@ function check_for_table(message, payload) {
 						$('#P1_Temp').text(payload + ' °C');
 						temp_data[tmp_counter] = [new Date(), payload];
 						tmp_counter++;
-						water_data[wtr_counter] = [new Date(), Math.floor(Math.random() * 100)];
-						wtr_counter++;
 						localStorage.setItem('stored_temp_data',temp_data);
 						drawDiag2(temp_data);
 						
@@ -100,17 +96,29 @@ function check_for_table(message, payload) {
 			default: console.log('Error: Data do not match the MQTT topic.'); 
 			break;	
 		}
-		if (localStorage.getItem('stored_temp_data') != null)
+		if (tmp_counter>0 && hum_counter>0)
 			document.title = temp_data[tmp_counter-1][1] + "°C / " + hum_data[hum_counter-1][1] + "%";
 	}
 }
 
+//Daily watertimekeeping
+var water_amount = 0;
+var water_day = new Date().getDay()
+
 //called by buttonclick in mainpage
 function startWater() {
-	console.log(document.getElementById("watertime").value);
-	SendMessage ("water_ctrl", document.getElementById("watertime").value);
-	console.log( "sent water command - time: " + document.getElementById("watertime").value ); 
-			
+	var watertime = document.getElementById("watertime").value;
+	SendMessage ("water_ctrl", watertime);
+	console.log( "sent water command - time: " + watertime );
+	var today = new Date().getDay();
+	if (water_day = today) {
+		water_amount = water_amount + parseInt(watertime);
+	} else {
+		water_amount = parseInt(watertime);
+		water_day = today;
+	}
+	
+	$('#P1_WaterTime').text(water_amount + 's');
 }
 
 $(document).ready(

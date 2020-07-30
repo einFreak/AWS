@@ -68,7 +68,7 @@ void loop() {
       previousMillis2 = currentMillis;
       int percentage = 100 - ( ((moist_val[0] - 460) * 100) / 540 ); //540 = moist_100_pct = 1000 - 460
       
-      if (percentage < 25) {
+      if (percentage < 35) {
         send_message("debug/watering", 30);
         water_plant(0, 30*1000);
       }

@@ -96,9 +96,16 @@ function check_for_table(message, payload) {
 			default: console.log('Error: Data do not match the MQTT topic.'); 
 			break;	
 		}
-		if (tmp_counter>0 && hum_counter>0)
-			document.title = temp_data[tmp_counter-1][1] + "°C / " + hum_data[hum_counter-1][1] + "%";
 	}
+	
+	//check for water commands
+	if (message[0] == "water_ctrl") {
+		update_table_water(payload);
+	}
+	
+	//updates page title
+	if (tmp_counter>0 && hum_counter>0)
+		document.title = temp_data[tmp_counter-1][1] + "°C / " + hum_data[hum_counter-1][1] + "%" + " / " + document.getElementById("P1_WaterTime").innerHTML;
 }
 
 //Daily watertimekeeping
@@ -110,15 +117,27 @@ function startWater() {
 	var watertime = document.getElementById("watertime").value;
 	SendMessage ("water_ctrl", watertime);
 	console.log( "sent water command - time: " + watertime );
+}
+
+//change watertime
+function update_table_water(payload) {
+	console.log("updating water table");
 	var today = new Date().getDay();
 	if (water_day = today) {
-		water_amount = water_amount + parseInt(watertime);
+		water_amount = water_amount + parseInt(payload);
 	} else {
-		water_amount = parseInt(watertime);
+		water_amount = parseInt(payload);
 		water_day = today;
 	}
 	
-	$('#P1_WaterTime').text(water_amount + 's');
+	localStorage.setItem('stored_water_amount',water_amount);
+	localStorage.setItem('stored_water_day',water_day);
+	
+	if (water_amount > 60) {
+		var water_min = (water_amount - water_amount % 60) / 60;
+		var water_sek = water_amount % 60;
+		$('#P1_WaterTime').text(water_min + ':' + ("00" + water_sek).slice(-2) + ' min');
+	} else $('#P1_WaterTime').text(water_amount + ' s');
 }
 
 $(document).ready(
@@ -127,5 +146,11 @@ $(document).ready(
 		hum_counter = update_counter(hum_data);
 		temp_data = get_localData('stored_temp_data', temp_data, tmp_counter, 'temp');
 		tmp_counter = update_counter(temp_data);
+		
+		if (localStorage.getItem('stored_water_amount')  != null) {
+			water_amount = parseInt(localStorage.getItem('stored_water_amount'));
+			water_day = parseInt(localStorage.getItem('stored_water_day'));
+			update_table_water(0);
+		}
 	}
 );

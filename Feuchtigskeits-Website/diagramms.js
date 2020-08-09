@@ -78,7 +78,9 @@ function drawDiag1(line1){
 			useAxesFormatters: false
 		},
 		cursor: {
-			show: false
+			show: true,
+			showTooltip: true,
+			zoom:true
 		}
     });
 };
@@ -156,7 +158,9 @@ function drawDiag2(line2){
 			useAxesFormatters: false
 		},
 		cursor: {
-			show: false
+			show: true,
+			showTooltip: true,
+			zoom:true
 		}
     });
 };

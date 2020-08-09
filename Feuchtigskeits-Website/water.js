@@ -2,10 +2,14 @@
 //filled by $(document).ready at the bottom
 var hum_data 	= [[new Date(), 0]];
 var temp_data 	= [[new Date(), 0]];
+var hum_data_24h = [[new Date(), 0]];
 
 //for drawing diagrams
 var hum_counter = 0;
 var tmp_counter = 0;
+var hum_data_24h_counter = 0;
+var yesterday = new Date();
+yesterday.setDate(yesterday.getDate() - 1);
 
 //get stored data
 function get_localData(stored_element, element_data, element_counter, titel) {
@@ -17,7 +21,7 @@ function get_localData(stored_element, element_data, element_counter, titel) {
 		var temp_counter 	= 0;
 		while (temp_counter < splitString.length) {
 			if(parseInt(splitString[temp_counter+1]) < 100) {
-				element_data[element_counter] = [splitString[temp_counter], splitString[temp_counter+1]];
+				element_data[element_counter] = [new Date(splitString[temp_counter]), splitString[temp_counter+1]];
 				element_counter++;
 			}
 			temp_counter = temp_counter + 2;
@@ -73,7 +77,19 @@ function check_for_table(message, payload) {
 						hum_data[hum_counter] = [new Date(), payload];
 						hum_counter++;
 						localStorage.setItem('stored_hum_data',hum_data);
-						drawDiag1(hum_data);
+						
+						yesterday = new Date();
+						yesterday.setDate(yesterday.getDate() - 1);
+
+						hum_data_24h_counter = 0;
+						hum_data_24h = [[new Date(), 0]];
+						for (var tmp = 0; tmp < hum_counter; tmp++) {
+							if (hum_data[tmp][0] > yesterday) {
+								hum_data_24h[hum_data_24h_counter] = hum_data[tmp];
+								hum_data_24h_counter++;
+							}
+						}
+						drawDiag1(hum_data_24h);
 						break;
 				}
 				break;	

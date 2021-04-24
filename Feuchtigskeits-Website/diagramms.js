@@ -4,8 +4,10 @@ $(document).ready(
 		console.log( "ready for Diagramms!" );
 		drawDiag1(hum_data);
 		console.log( "Diag1 drawn" );
-		drawDiag2(temp_data);
+		drawDiag2(hum_data);
 		console.log( "Diag2 drawn" );
+		drawTempDiag(temp_data);
+		console.log( "TempDiag drawn" );
 	}
 );
 
@@ -86,10 +88,86 @@ function drawDiag1(line1){
 };
 
 var plot2;
-function drawDiag2(line2){
+function drawDiag2(line1){
  
     if (plot2) plot2.destroy();
-	plot2 = $.jqplot('P2_Diag', [line2], {
+	plot2 = $.jqplot('P2_Diag', [line1], {
+        title: 'Moisture2',
+		grid: {
+            backgroundColor: "#444444",
+            gridLineColor: '#999999',
+            gridLineWidth: 2
+        },
+		stackSeries: true,
+		showMarker: false,
+		seriesDefaults: {
+			fill: true,
+			fillToZero: true,
+			rendererOptions: {
+                smooth: true
+			}
+		},
+		 series: [
+            {color: 'rgba(25, 200, 255, 0.4)'}
+		],
+		legend: {show:false},
+        axesDefaults: {
+            tickRenderer:$.jqplot.CanvasAxisTickRenderer,
+			labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
+            tickOptions: {
+                angle: -30,
+                fontSize: '10pt'
+            },
+			labelOptions:
+			{
+				fontFamily:'Helvetica',
+				fontSize: '14pt'
+			},
+			tickOptions:
+			{ 
+				angle: -30
+			},
+            showMinorTicks:true
+        },
+		axes:
+		{
+			xaxis:
+			{
+				tickOptions:
+				{
+					formatString: "%d.%m.%y - %H:%M:%S"
+				},
+				// tickInterval: '1 minute',
+				renderer: $.jqplot.DateAxisRenderer,
+				label:'Timestamp' 
+			}, 
+			yaxis:
+			{
+				min: 0,
+				max: 100,
+				label:'Feuchtigkeit'
+			}
+		},
+		highlighter: {
+			show: true,
+			sizeAdjust: 7.5,
+			tooltipAxes: "y",
+			tooltipFormatString: '%d %',
+			useAxesFormatters: false
+		},
+		cursor: {
+			show: true,
+			showTooltip: true,
+			zoom:true
+		}
+    });
+};
+
+var plotTemp;
+function drawTempDiag(line2){
+ 
+    if (plotTemp) plotTemp.destroy();
+	plotTemp = $.jqplot('Temp_Diag', [line2], {
         title:'Temperatur',
 		grid: {
             backgroundColor: "#444444",

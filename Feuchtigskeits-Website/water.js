@@ -68,7 +68,7 @@ function check_for_table(message, payload) {
 						temp_data[tmp_counter] = [new Date(), payload];
 						tmp_counter++;
 						localStorage.setItem('stored_temp_data',temp_data);
-						drawDiag2(temp_data);
+						drawTempDiag(temp_data);
 						
 						break;
 					case 'hum':
@@ -131,8 +131,10 @@ var water_day = new Date().getDay()
 //called by buttonclick in mainpage
 function startWater() {
 	var watertime = document.getElementById("watertime").value;
-	SendMessage ("water_ctrl", watertime);
-	console.log( "sent water command - time: " + watertime );
+	var pump = document.getElementById("selpump").value;
+	var msg = pump+"/"+watertime;
+	SendMessage ("water_ctrl", msg);
+	console.log( "sent water command - pump/time: " + msg );
 }
 
 //change watertime

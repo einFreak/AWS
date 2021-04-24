@@ -14,8 +14,8 @@ extern int moist_val[4];
 extern int read_moist(int *val, char sensor);
 
 WiFiClient espClient;
-const char*     MQTT_BROKER_IP  = "192.168.178.190";
-const char*     MQTT_SUB_TOPIC  = "water_ctrl"; //zB "/home/data" - momentan unnötig
+const char*     MQTT_BROKER_IP  = "192.168.169.100";
+const char*     MQTT_SUB_TOPIC  = "water_ctrl"; 
 int             MQTT_PORT       = 1883;
 PubSubClient client(espClient);
 
@@ -68,12 +68,17 @@ void callback(char* topic, byte* payload, unsigned int length) {
     }
     //End of line für fertigen String
     msg[length] = '\0';
+
+    char *pump_str = strtok(msg, "/");
+    char *watertime_str = strtok(NULL, "/");
      
     send_message("debug", "new command");
-    unsigned int water_time = atoi(msg);
-    send_message("debug/watering", water_time);
+    unsigned int pump = atoi(pump_str);
+    unsigned int water_time = atoi(watertime_str);
+    send_message("debug/watering/pump", pump);
+    send_message("debug/watering/time", water_time);
     if (water_time < 300)
-        water_plant(0, water_time*1000);
+        water_plant(pump-1, water_time*1000);
 }
 
 #endif own_mqtt_h

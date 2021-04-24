@@ -1,5 +1,5 @@
 //settings for MQTT Broker
-var host = '192.168.178.190';
+var host = '192.168.169.100';
 var port = 9001;
 var clientID = "Moistursensor_Webpage"; //by connect with random number 0-99
 var topic = '#';
@@ -58,7 +58,7 @@ function onMessageArrived(message) {
 	var topic = message.destinationName;
 	var payload = message.payloadString;
 	//filtering debug messages from esp
-	if(!topic.includes('plants/1/debug')) 
+	if(topic.includes('plants')) 
 		console.log("Topic: " + topic + ", Message payload: " + payload); 
 	//changes id "message" to topic, payload
 	$('#message').html(topic + ', ' + payload);

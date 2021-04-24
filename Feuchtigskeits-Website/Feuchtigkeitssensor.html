@@ -56,32 +56,28 @@
 	<table border="1" cellpadding="10" cellspacing="2">
 		<tbody>
 			<tr>
-				<td colspan="2" rowspan="1" style="vertical-align: top; text-align: center;">Reiner</td>
-				<!-- <td colspan="2" rowspan="1" style="vertical-align: top; text-align: center;">Pflanze 2      </td> -->
+				<td colspan="2" rowspan="1" style="vertical-align: top; text-align: center;">Reiner1</td>
+				<td colspan="2" rowspan="1" style="vertical-align: top; text-align: center;">Reiner2</td>
 			</tr>
 			<tr>
-				<td style="vertical-align: top;">Signal							</td>
-				<td style="vertical-align: top;"><span id="P1_Sig">???</span>	</td>
-				<!-- <td style="vertical-align: top; text-align: left;">Signal		</td>
-				<td style="vertical-align: top;"><span id="P2_Sig">???</span>	</td> -->
+				<td colspan="2" style="vertical-align: top;">Signal							</td>
+				<td colspan="2" style="vertical-align: top;"><span id="P1_Sig">???</span>	</td>
 			</tr>
 			<tr>
-				<td style="vertical-align: top;">Temp							</td>
-				<td style="vertical-align: top;"><span id="P1_Temp">???</span>	</td>
-				<!-- <td style="vertical-align: top;">Temp							</td>
-				<td style="vertical-align: top;"><span id="P2_Temp">???</span>	</td> -->
+				<td colspan="2" style="vertical-align: top;">Temp							</td>
+				<td colspan="2" style="vertical-align: top;"><span id="P1_Temp">???</span>	</td>
 			</tr>
 			<tr>
 				<td style="vertical-align: top;">Feuchtigkeit					</td>
 				<td style="vertical-align: top;"><span id="P1_Hum">???</span>	</td>
-				<!-- <td style="vertical-align: top;">Feuchtigkeit					</td>
-				<td style="vertical-align: top;"><span id="P2_Hum">???</span>	</td> -->
+				<td style="vertical-align: top;">Feuchtigkeit					</td>
+				<td style="vertical-align: top;"><span id="P2_Hum">???</span>	</td>
 			</tr>
 			<tr>
-				<td style="vertical-align: top;">Bewaesserung in s					</td>
+				<td style="vertical-align: top; width:40%;">Bewaesserung in s					</td>
 				<td style="vertical-align: top;"><span id="P1_WaterTime">???</span>	</td>
-				<!-- <td style="vertical-align: top;">Bewässerungszeit (Heute)					</td>
-				<td style="vertical-align: top;"><span id="P2_WaterTime">???</span>	</td> -->
+				<td style="vertical-align: top; width:40%;">Bewässerungszeit (Heute)					</td>
+				<td style="vertical-align: top;"><span id="P2_WaterTime">???</span>	</td>
 			</tr>
 		</tbody>
 	</table>
@@ -93,6 +89,13 @@
 				<option value=10>10s</option>
 				<option value=30>30s</option>
 				<option value=60>60s</option>
+				<option value=1>1s - Test</option>
+			</select>
+		</label>
+		<label>Pumpe:
+			<select name="pump" id="selpump">
+				<option value=1>1</option>
+				<option value=4>4</option>
 			</select>
 		</label>
 		<br>
@@ -101,11 +104,14 @@
 	<script>document.querySelector('#water_btn').addEventListener('click', startWater);</script>
 	
 	<br><br>
-	<div style="width: 100%; height: auto;" align="left" id="P1_Diag"></div>
-	<br><br><br>
-	<div style="width: 100%; height: auto;" align="left" id="P2_Diag"></div>
+	<div style="width: 100%; height: auto;">
+		<div style="width: 49%; height: auto; float: left;" align="left" id="P1_Diag"></div>
+		<div style="width: 49%; height: auto; float: right;" align="right" id="P2_Diag"></div>
+		<div style="clear:both;"></div>
+	</div>
+	<br><br><br><br><br><br>
+	<div style="width: 100%; height: auto;" align="left" id="Temp_Diag"></div>
 	<br><br><br><br>
-	
 
 	<div class="Status_Left"> <b>Latest MQTT message: </b> <small id="message">no message recieved</small> </div>
 

@@ -63,8 +63,16 @@ lsof -i:9001
 ```
 sudo nano /etc/proftpd/proftpd.conf
 ```
+```
+systemctl stop proftpd
+sed -i '/DefaultRoot /c\DefaultRoot /path/to/directory' /etc/proftpd/proftpd.conf
+systemctl start proftpd
+```
 2. change permissions
 ```
+Holzhammer:
+chown -R dietpi /var/www/
+Normal:
 sudo adduser dietpi www-data
 sudo dietpi:www-data -R /var/www
 sudo chown dietpi:www-data -R /var/www
@@ -74,6 +82,13 @@ sudo chown dietpi:www-data -R /var/www
 ## Add website to existing pihole lighttpd setup
 Add files to pihole admin folder:
 ```
-/var/www/html/admin
+/var/www/html/admin/scripts/pi-hole/php/header.php
+//add:
+<!-- Custom HumSens -->
+<li>
+    <a href="Feuchtigkeitssensor.html" rel="noopener" target="_blank">
+        <i class="fas fa-cannabis"></i> <span> Hum. Sens</span>
+    </a>
+</li>
 ```
 Aufruf über: pi.hole/admin/site.hmtl

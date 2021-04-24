@@ -12,7 +12,7 @@ extern int moist_val[4];
 extern int read_moist(int *val, char sensor);
 
 WiFiClient espClient;
-const char*     MQTT_BROKER_IP  = "192.168.178.190";
+const char*     MQTT_BROKER_IP  = "192.168.169.100";
 const char*     MQTT_SUB_TOPIC  = "/controll"; //zB "/home/data" - momentan unnötig
 int             MQTT_PORT       = 1883;
 PubSubClient client(espClient);

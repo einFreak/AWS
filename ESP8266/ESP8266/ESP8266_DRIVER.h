@@ -11,14 +11,14 @@
    D4 -> Verbraucher 4                            |   1 | 1   ->  A3
 
    D2: LED, D3/4 no pull low, D8 no pull high
-*/
+
 
 #define D0  16
 #define D1  5
 #define D2  4
 #define D3  0
 #define D4  2
-#define D5  14
+#define D5  14*/
 #define mA0 12
 #define mA1 13
 #define EN  15

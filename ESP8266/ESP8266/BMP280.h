@@ -3,6 +3,7 @@
 
 #include <Wire.h>
 #include <SPI.h>
+#include "mqtt.h"
 #include "Adafruit_BMP280.h"
 
 
@@ -26,27 +27,29 @@ void setup_bmp() {
 }
 
 float get_bmp_temp() {
-    float temp = bmp.readTemperature();
+  
+  float temp = bmp.readTemperature();
 	float pres = bmp.readPressure();
 	float alti = bmp.readAltitude(1021);
 		
-	  Serial.print(F("Temperature = "));
-    Serial.print(temp);
-    Serial.println(" *C");
+	Serial.print(F("Temperature = "));
+  Serial.print(temp);
+  Serial.println(" *C");
 
-    Serial.print(F("Pressure = "));
-    Serial.print(alti);
-    Serial.println(" Pa");
+  Serial.print(F("Pressure = "));
+  Serial.print(alti);
+  Serial.println(" Pa");
 
-    Serial.print(F("Approx altitude = "));
-    Serial.print(alti); /* Adjusted to local forecast! */
-    Serial.println(" m");
+  Serial.print(F("Approx altitude = "));
+  Serial.print(alti); /* Adjusted to local forecast! */
+  Serial.println(" m");
 
-    Serial.println();
+  Serial.println();
 
-	  send_message("debug/pres", pres );
-	  send_message("debug/alti", alti );
-    send_message("plants/1/temp", temp);
+  send_message("plants/1/debug/temp", temp );
+	send_message("plants/1/debug/pres", pres );
+	send_message("plants/1/debug/alti", alti );
+  send_message("plants/1/temp", temp);
 	
 	return temp;
 }
